@@ -1,5 +1,5 @@
 node_modules/
 bundle.js
-npm-debug.*
+yarn-debug.*
 .vscode/
-package-lock.json
+yarn-lock.json
