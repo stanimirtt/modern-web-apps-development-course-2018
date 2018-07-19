@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import axios from 'axios';
 import startsWith from 'lodash/startsWith';
 import lowerCase from 'lodash/lowerCase';
 import filter from 'lodash/filter';
+import { observer } from 'mobx-react';
 
 import SearchBox from './SearchBox';
 import ItemList from './ItemList';
@@ -26,7 +28,7 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { selectedItem: null, term: '', items: ITEMS };
+    this.props.appState.setItems(ITEMS);
 
     this.handleItemSelect = this.handleItemSelect.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -35,41 +37,52 @@ class App extends Component {
   handleItemSelect(item) {
     searchByTitle(item.title)
       .then(response => {
-        this.setState({
-          selectedItem: response.data
-        });
+        this.props.appState.setSelectedItem(response.data);
       })
       .catch(error => console.log(error));
   }
 
   handleInputChange(value) {
-    this.setState(
-      {
-        term: value
-      },
-      () => {
-        if (value) {
-          this.setState({
-            items: filter(ITEMS, item => startsWith(lowerCase(item.title), lowerCase(this.state.term)))
-          });
-        } else {
-          this.setState({
-            items: ITEMS
-          });
-        }
-      }
-    );
+    this.props.appState.setTerm(value);
+
+    if (value) {
+      this.props.appState.setItems(
+        filter(ITEMS, item => startsWith(lowerCase(item.title), lowerCase(this.props.appState.term)))
+      );
+    } else {
+      this.props.appState.setItems(ITEMS);
+    }
   }
 
   render() {
     return (
       <div>
-        <SearchBox term={this.state.term} onInputChange={this.handleInputChange} />
-        <ItemList items={this.state.items} onItemSelect={this.handleItemSelect} />
-        <ItemDetail item={this.state.selectedItem} />
+        <SearchBox term={this.props.appState.term} onInputChange={this.handleInputChange} />
+        <ItemList items={this.props.appState.items} onItemSelect={this.handleItemSelect} />
+        <ItemDetail item={this.props.appState.selectedItem} />
       </div>
     );
   }
 }
 
-export default App;
+App.propTypes = {
+  appState: PropTypes.shape({
+    items: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number,
+        title: PropTypes.string,
+        plot: PropTypes.string
+      })
+    ),
+    term: PropTypes.string,
+    selectedItem: PropTypes.string,
+    setSelectedItem: PropTypes.func,
+    setTerm: PropTypes.func,
+    setItems: PropTypes.func
+  })
+};
+
+App.defaultProps = {
+  appState: {}
+};
+export default observer(App);
