@@ -1,0 +1,103 @@
+{
+  "env": {
+    "browser": true
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true
+    }
+  },
+  "parser": "babel-eslint",
+  "extends": ["airbnb", "prettier", "prettier/react", "plugin:require-path-exists/recommended"],
+  "plugins": ["react", "prettier", "jsx-a11y", "import", "require-path-exists"],
+  "rules": {
+    /* Enable Prettier reports as eslint errors */
+    "prettier/prettier": "error",
+
+    /* Skip `radix` for `parseInt` */
+    "radix": "off",
+
+    /* Turn offs  */
+    "import/no-unresolved": "off",
+    "import/prefer-default-export": "off",
+    "import/no-extraneous-dependencies": "off",
+
+    "jsx-a11y/no-static-element-interactions": "off",
+    "jsx-a11y/label-has-for": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-noninteractive-element-interactions": "off",
+
+    "react/require-extension": "off",
+    "react/jsx-space-before-closing": "off",
+
+    "jsx-a11y/href-no-hash": "off",
+    "jsx-a11y/anchor-is-valid": ["warn", { "aspects": ["invalidHref"] }],
+
+    "no-restricted-globals": "off",
+    "no-prototype-builtins": "off",
+    "no-underscore-dangle": "off",
+    "space-before-function-paren": "off",
+    "class-methods-use-this": "off",
+    "default-case": "off",
+
+    /* React */
+    "react/jsx-filename-extension": [1, { "extensions": [".jsx"] }],
+    "react/no-unused-prop-types": ["error", { "skipShapeProps": true }],
+
+    "no-use-before-define": [
+      "error",
+      {
+        "functions": false,
+        "classes": true
+      }
+    ],
+
+    /* Imports */
+    "import/named": ["error"],
+    "import/export": ["error"],
+    "import/default": ["error"],
+    "import/namespace": [
+      "error",
+      {
+        "allowComputed": true
+      }
+    ],
+    "import/extensions": [
+      "error",
+      {
+        "json": "always",
+        "less": "always",
+        "tsx": "never",
+        "ts": "never",
+        "js": "never",
+        "jsx": "never"
+      }
+    ],
+    "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external"]
+      }
+    ],
+    "import/newline-after-import": ["error"],
+
+    "require-path-exists/exists": "off",
+
+    /* Debug related */
+    "no-debugger": ["error"],
+    "no-alert": ["error"],
+
+    /* Lines & spacing */
+    "newline-after-var": ["error", "always"],
+    "newline-before-return": ["error"],
+    "linebreak-style": "off"
+  },
+  "settings": {
+    "import/extensions": [".js", ".jsx"],
+    "import/resolver": {
+      "webpack": {
+        "config": "webpack.config.js"
+      }
+    }
+  }
+}

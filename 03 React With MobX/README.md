@@ -5,7 +5,7 @@ Modern Web Apps Development course. Including ESLint and Prettier integration.
 
 ```
 > git clone https://github.com/stanimirtt/modern-web-apps-development-course-2018.git
-> cd modern-web-apps-development-course-2018/02 AJAX Requests With React
+> cd modern-web-apps-development-course-2018/03 React With MobX
 > yarn
 > yarn start
 ```
