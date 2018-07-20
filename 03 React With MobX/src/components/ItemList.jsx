@@ -1,13 +1,13 @@
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-import ListItem from './ListItem';
+import { ListItem } from '../components';
 import { appStatePropType, appStatePropTypeDefaults } from '../stores';
 
 @inject('appState')
 @observer
 class ItemList extends React.Component {
   render() {
-    return this.props.appState.items ? (
+    return this.props.appState.filteredItemsByTerm ? (
       <ul className="items">
         {this.props.appState.filteredItemsByTerm.map(item => <ListItem key={item.id} item={item} />)}
       </ul>
