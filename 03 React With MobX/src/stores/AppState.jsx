@@ -15,6 +15,6 @@ export class AppState {
   }
   @action
   setItems(items) {
-    this.items.replace(observable(items));
+    this.items = items;
   }
 }
