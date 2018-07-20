@@ -1,30 +1,30 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { observer, inject } from 'mobx-react';
 import ListItem from './ListItem';
+import { appStatePropType, appStatePropTypeDefaults } from '../stores';
 
-const ItemList = ({ items, onItemSelect }) =>
-  items.length > 0 ? (
-    <ul className="items">{items.map(item => <ListItem key={item.id} item={item} onItemSelect={onItemSelect} />)}</ul>
-  ) : (
-    <ul className="items">
-      <li className="item">No found items.</li>
-    </ul>
-  );
+@inject('appState')
+@observer
+class ItemList extends React.Component {
+  render() {
+    return this.props.appState.items ? (
+      <ul className="items">
+        {this.props.appState.filteredItemsByTerm.map(item => <ListItem key={item.id} item={item} />)}
+      </ul>
+    ) : (
+      <ul className="items">
+        <li className="item">No found items.</li>
+      </ul>
+    );
+  }
+}
 
-ItemList.propTypes = {
-  items: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number,
-      title: PropTypes.string,
-      plot: PropTypes.string
-    })
-  ),
-  onItemSelect: PropTypes.func
+ItemList.wrappedComponent.propTypes = {
+  appState: appStatePropType
 };
 
-ItemList.defaultProps = {
-  items: [],
-  onItemSelect: () => true
+ItemList.wrappedComponent.defaultProps = {
+  appState: appStatePropTypeDefaults
 };
 
 export default ItemList;

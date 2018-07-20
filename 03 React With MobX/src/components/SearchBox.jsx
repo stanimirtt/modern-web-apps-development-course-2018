@@ -1,24 +1,35 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import { observer, inject } from 'mobx-react';
+import { appStatePropType, appStatePropTypeDefaults } from '../stores';
 
-const SearchBox = ({ term, onInputChange }) => {
-  const onChange = e => onInputChange(e.target.value);
+@inject('appState')
+@observer
+class SearchBox extends React.Component {
+  constructor(props) {
+    super(props);
 
-  return (
-    <div className="search-box">
-      <input value={term} onChange={onChange} placeholder="Search..." />
-    </div>
-  );
+    this.handleInputChange = this.handleInputChange.bind(this);
+  }
+
+  handleInputChange(e) {
+    this.props.appState.setTerm(e.target.value);
+  }
+
+  render() {
+    return (
+      <div className="search-box">
+        <input value={this.props.appState.term} onChange={this.handleInputChange} placeholder="Search..." />
+      </div>
+    );
+  }
+}
+
+SearchBox.wrappedComponent.propTypes = {
+  appState: appStatePropType
 };
 
-SearchBox.propTypes = {
-  term: PropTypes.string,
-  onInputChange: PropTypes.func
-};
-
-SearchBox.defaultProps = {
-  term: '',
-  onInputChange: () => true
+SearchBox.wrappedComponent.defaultProps = {
+  appState: appStatePropTypeDefaults
 };
 
 export default SearchBox;
