@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const ItemDetail = ({ item }) =>
-  item ? (
+  item.Title ? (
     <div className="item-detail">
       <p className="info">
         <img src={item.Poster} alt={item.Title} width="100%" />

@@ -4,23 +4,30 @@ import { observable, action } from 'mobx';
 
 import App from './components/App';
 
-const appState = observable({
-  items: [],
-  term: '',
-  selectedItem: null
-});
+class AppState {
+  @observable items = [];
+  @observable term = '';
+  @observable selectedItem = {};
 
-appState.setSelectedItem = action(item => {
-  appState.selectedItem = item;
-});
+  // TODO: Show computed case
 
-appState.setTerm = action(value => {
-  appState.term = value;
-});
+  @action
+  setSelectedItem(item) {
+    this.selectedItem = item;
+  }
 
-appState.setItems = action(items => {
-  appState.items = items;
-});
+  @action
+  setTerm(value) {
+    this.term = value;
+  }
+
+  @action
+  setItems(items) {
+    this.items.replace(observable(items));
+  }
+}
+
+const appState = new AppState();
 
 window.appState = appState;
 

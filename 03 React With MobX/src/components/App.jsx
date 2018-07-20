@@ -24,6 +24,8 @@ const API_URL = 'http://www.omdbapi.com';
 
 const searchByTitle = term => axios.get(`${API_URL}/?t=${term}&apikey=${API_KEY}`);
 
+// TODO: Use dummy component
+@observer
 class App extends Component {
   constructor(props) {
     super(props);
@@ -54,6 +56,7 @@ class App extends Component {
     }
   }
 
+  // TODO: Remove props and use inject to pass them
   render() {
     return (
       <div>
@@ -75,7 +78,11 @@ App.propTypes = {
       })
     ),
     term: PropTypes.string,
-    selectedItem: PropTypes.string,
+    selectedItem: PropTypes.shape({
+      id: PropTypes.number,
+      title: PropTypes.string,
+      plot: PropTypes.string
+    }),
     setSelectedItem: PropTypes.func,
     setTerm: PropTypes.func,
     setItems: PropTypes.func
@@ -85,4 +92,5 @@ App.propTypes = {
 App.defaultProps = {
   appState: {}
 };
-export default observer(App);
+
+export default App;
