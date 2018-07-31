@@ -1,0 +1,1 @@
+export const ITEM_SELECTED = 'ITEM_SELECTED';
